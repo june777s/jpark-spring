@@ -13,7 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)//
 @WebMvcTest(controllers = HelloController.class)//
-public class HelloControllerTest {
+public class
+HelloControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -27,3 +28,4 @@ public class HelloControllerTest {
                 .andExpect(content().string(hello));
     }
 }
+
