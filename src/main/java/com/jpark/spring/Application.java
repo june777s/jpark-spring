@@ -12,7 +12,7 @@ public class Application {
     public static void main(String[] args){
         SpringApplication.run(Application.class,args); //내장 was 실행
         // main 메소드에서 실행하는 SpringApplication.run 으로 인하여 내장 was 실행
-        // 별도의 외부was가 필요 없음
+        // 별도의 외부was가 필요 없음 
         // 스프링부트로 인하여 톰캣 설치를 할 필요가 없고 스프링 부트로 만들어진 jar 파일로 실행 가능
     }
 }
