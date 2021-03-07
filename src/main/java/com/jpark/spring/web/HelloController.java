@@ -1,6 +1,7 @@
 package com.jpark.spring.web;
 
 import com.jpark.spring.web.dto.HelloResponseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,8 @@ public class HelloController {
     //HTTP 메소드인 Get의 요청을 받을수 있는 API를 만들어 줌
     //예전에는 @RequestMapping @GetMapping 똑같이 Get의 요청을 받지만
     //@RequestMapping는 클래스에 , @GetMapping는 메소드에서 사용한다
+
+
     public String hello(){
         return "hello";
         // 이 프로젝트는 /hello 로 요청이 들어오면 문자열 hello를 반환하는 기능을 가지게 됨

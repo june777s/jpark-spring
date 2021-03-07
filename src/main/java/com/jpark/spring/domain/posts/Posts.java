@@ -1,6 +1,7 @@
 package com.jpark.spring.domain.posts;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,11 +13,14 @@ import javax.persistence.*;
 //기본생성자 자동추가
 //public Posts(){} 와 같은 효과
 @Entity //테이블과 링크될 클래스
+        //해당클랙스는 entity 로 사용하겠다는 어노테이션 선언
+        //Entity 클래스에서는 절대 setter 메소드를 만들지 않는다
 public class Posts { //실제 db의 테이블과 매칭될 클래스 ( 보통 Entity 클래스라고 한다 )
                      //JPA를 사용시 db 데이터에 작업할 경우 실제 쿼리를 날리기보다 이 Entity 클래스의 수정을 통해 작업함
 
     @Id // 해당 테이블의 'PK' 필드를 나타냄
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //이값들을 자동으로 생성
     //PK 생성 규칙을 나타냄 ( 스프링부트 2.0 에서는 GenerationType.IDENTITY 옵션을 추가해야하만 auto increment가 됨
     private Long id;
 
