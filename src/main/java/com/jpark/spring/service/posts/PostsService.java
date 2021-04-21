@@ -2,12 +2,16 @@ package com.jpark.spring.service.posts;
 
 import com.jpark.spring.domain.posts.Posts;
 import com.jpark.spring.domain.posts.PostsRepository;
+import com.jpark.spring.web.dto.PostsListResponseDto;
 import com.jpark.spring.web.dto.PostsResponseDto;
 import com.jpark.spring.web.dto.PostsSaveRequestDto;
 import com.jpark.spring.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 // 보통 빈을주입받는 방식은 @Autowired보다 생성자를 통하여 외부로부터 빈을 주입받는 방식을 사용한다
@@ -44,6 +48,24 @@ public class PostsService {
         posts.update(requestDto.getTitle(),requestDto.getContent());
         System.out.println("service : " + id );
         return  id;
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+        //1.stream 은 다양한 데이타소스를 표준화된 방법을 다루기 위한것 stream() 데이타 컬렉션으로 배열이든, 리스트든 ,set이든 묶음
+        //  또한 stream()을 통하여 중간 연산이 가능하다
+        //2.map(클래스::메소드)
+        //  여기서 .map(PostsListResponseDto::new) 는 .map(posts -> new PostsListResponseDto(posts) ) 처럼 람다식으로 표현가능\
+        //3.collect 리스트와 타입이 다른 output을 내는 경우.(map 형식을 list 로)
+    }
+
+    @Transactional
+    public void delete (Long id){
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없음. id="
+                                                                + id));
+        postsRepository.delete(posts);
+
     }
 
     public PostsResponseDto findById(Long id) {
