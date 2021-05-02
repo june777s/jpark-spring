@@ -1,5 +1,6 @@
 package com.jpark.spring.web;
 
+import com.jpark.spring.config.auth.dto.SessionUser;
 import com.jpark.spring.service.posts.PostsService;
 import com.jpark.spring.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -8,18 +9,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 // final이 선언된 모든 필드를 인자값으로 하는 생성자를 롬복의 @RequiredArgsConstructor가 대신 생성
 @Controller
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/") //-> @RequestMapping(value="/", method = RequestMethod.GET) 과 동일
     public String index(Model model)
     {
         model.addAttribute("posts",postsService.findAllDesc());
         //서버 템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음
+
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        //(SessionUser)httpSession.getAttribute("user")->
+        //앞서 작성된 CustomerOAuth2UserService 에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성
+        //즉 로그인 성공시 httpSession.getAttribute("user")에서 값을 가져올 수 있음
+        if(user != null){
+            model.addAttribute("userName", user.getName());
+        }
+
+
         return "index";
         //머스테치 스타터 덕분에 index를 반환할때 앞의 경로와 뒤의 파일 확장자는 자동으로 지정
         // 예를들어서 경로가 src/main/resources/templates/index.mustache 인데
